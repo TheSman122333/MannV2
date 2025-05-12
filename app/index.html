@@ -1,0 +1,54 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>JARVIS System Monitor</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: transparent;
+      font-family: 'Arial', sans-serif;
+      color: #00fffc;
+    }
+    #container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    .panel {
+      background: rgba(0, 20, 30, 0.7);
+      border: 1px solid #00fffc;
+      border-radius: 5px;
+      box-shadow: 0 0 15px #00fffc;
+      padding: 15px;
+      margin: 10px;
+      backdrop-filter: blur(5px);
+    }
+    .glow {
+      text-shadow: 0 0 10px #00fffc;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div class="panel" style="position: absolute; top: 20px; left: 20px; width: 300px;">
+      <h2 class="glow">CPU</h2>
+      <div id="cpu-usage">Loading...</div>
+      <div id="cpu-cores">Cores: </div>
+    </div>
+    
+    <div class="panel" style="position: absolute; top: 20px; right: 20px; width: 300px;">
+      <h2 class="glow">Memory</h2>
+      <div id="memory-usage">Loading...</div>
+      <div id="memory-available">Available: </div>
+    </div>
+    
+    <canvas id="hologram"></canvas>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
