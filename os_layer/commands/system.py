@@ -2,6 +2,7 @@ from AppOpener import open
 from core.registry import register
 import os
 import webbrowser
+import re
 
 
 @register("open_app")
@@ -22,22 +23,39 @@ def search_web(args):
     if not query:
         return "Search query is missing."
 
-    
-    search_url = f"https://www.google.com/search?q={query}"
-    try:
-        webbrowser.open(search_url)
-        return f"Searching the web for: {query}"
-    except Exception as e:
-        return f"Failed to search for '{query}': {str(e)}"
 
+    url_pattern = re.compile(
+        r'^(https?:\/\/)?'             
+        r'([\da-z\.-]+)\.([a-z\.]{2,6})'
+        r'([\/\w \.-]*)*\/?$'          
+    )
+
+
+    if url_pattern.match(query):
+        if not query.startswith("http://") and not query.startswith("https://"):
+            query = "http://" + query 
+        try:
+            webbrowser.open(query)
+            return f"Opening link: {query}"
+        except Exception as e:
+            return f"Failed to open link '{query}': {str(e)}"
+    else:
+    
+        search_url = f"https://www.google.com/search?q={query}"
+        try:
+            webbrowser.open(search_url)
+            return f"Searching the web for: {query}"
+        except Exception as e:
+            return f"Failed to search for '{query}': {str(e)}"
+        
 
 @register("shutdown")
 def shutdown(args):
     
     try:
-        if os.name == 'nt':  # Windows
+        if os.name == 'nt': 
             os.system("shutdown /s /f /t 0")
-        else:  # Unix-like (Linux, macOS)
+        else: 
             os.system("shutdown -h now")
         return "Shutting down the system..."
     except Exception as e:
