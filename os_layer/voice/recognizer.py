@@ -8,4 +8,4 @@ def listen():
     try:
         return r.recognize_google(audio)
     except sr.UnknownValueError:
-        return None
+        return None  

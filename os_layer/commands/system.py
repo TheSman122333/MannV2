@@ -60,3 +60,5 @@ def shutdown(args):
         return "Shutting down the system..."
     except Exception as e:
         return f"Failed to shutdown: {str(e)}"
+    
+    

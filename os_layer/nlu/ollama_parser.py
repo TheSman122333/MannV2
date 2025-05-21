@@ -47,7 +47,6 @@ User: "{input_text}"
 
 
 def parse_command(input_text):
-    # Dynamically generate the prompt
     prompt = build_prompt(input_text, AVAILABLE_COMMANDS)
     response = client.chat(model="mistral", messages=[{"role": "user", "content": prompt}])
     content = response['message']['content']
