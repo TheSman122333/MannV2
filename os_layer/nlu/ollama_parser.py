@@ -18,7 +18,7 @@ AVAILABLE_COMMANDS = [
         "intent": "shutdown",
         "description": "Shut down the computer.",
         "args": {}
-    }
+    },
 ]
 
 def build_prompt(input_text, commands):
