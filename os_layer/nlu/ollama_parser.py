@@ -19,6 +19,14 @@ AVAILABLE_COMMANDS = [
         "description": "Shut down the computer.",
         "args": {}
     },
+    {
+        "intent": "transcribe",
+        "description": "Toggle voice transcription to type into current window.",
+        "args": {
+            "action": "Either 'start' or 'stop'."
+    }
+    }
+
 ]
 
 def build_prompt(input_text, commands):

@@ -5,11 +5,12 @@ from nlu.create_func import generate_command
 from nlu.create_func import generate_command_docs
 from core.dispatcher import dispatch
 from core.loader import load_plugins
-
+from core.state import recognizer_event
 def main():
     load_plugins()
     say("Agent is ready.")
     while True:
+        recognizer_event.wait()
         text = listen()
         if not text:
             say("Didn't catch that.")
