@@ -7,6 +7,7 @@ def listen():
         print("Listening...")
         audio = r.listen(source)
     try:
+        print(r.recognize_google(audio))
         return r.recognize_google(audio)
     except sr.UnknownValueError:
         return None  

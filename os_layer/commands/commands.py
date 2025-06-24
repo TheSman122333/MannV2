@@ -11,6 +11,8 @@ from core.state import recognizer_event
 import keyboard
 from voice.speaker import say
 from plyer import notification
+import os
+APP_ID = os.getenv("WOLFRAM_APP_ID")
 
 stop_transcription_flag = False
 
@@ -147,3 +149,97 @@ def transcribe(args):
         return "Transcription stopped."
     else:
         return "Invalid action. Use 'start' or 'stop'."
+    
+
+import wolframalpha
+
+client = wolframalpha.Client(APP_ID)
+@register("ask_wolfram")
+def ask_wolfram(args: dict) -> str:
+    query = args.get("query", "")
+    if not query:
+        return "No query provided."
+
+    try:
+        res = client.query(query)
+
+        preferred_titles = ['result', 'definition', 'value', 'exact result', 'solution']
+        for pod in res.pods:
+            if pod.title.lower() in preferred_titles:
+                if pod.texts:
+                    return pod.texts[0]
+
+        primary = next((pod for pod in res.pods if pod.primary), None)
+        if primary and primary.texts:
+            return primary.texts[0]
+
+        for pod in res.pods:
+            if pod.texts:
+                return "Wolfram Alpha says :" + primary.texts[0]
+
+        return "Sorry, I couldn't find a condensed answer."
+    except Exception as e:
+        return f"An error occurred: {e}"
+    
+from datetime import datetime
+from tzlocal import get_localzone
+
+@register("get_time")
+def get_time(args):
+
+    local_tz = get_localzone()
+
+    local_time = datetime.now(local_tz)
+
+    formatted_time = local_time.strftime("%I:%M %p, %B %d, %Y")
+
+    return "Local time:" + formatted_time 
+
+@register("get_weather")
+def get_weather(args):
+    import requests
+
+    location = args.get("location", "Ann Arbor")
+    API_KEY =os.getenv("WEATHER_API_KEY")
+    BASE_URL = "http://api.weatherapi.com/v1/current.json"
+
+    params = {
+        "key": API_KEY,
+        "q": location,
+        "aqi": "no"
+    }
+
+    try:
+        response = requests.get(BASE_URL, params=params)
+        data = response.json()
+
+        if "current" in data:
+            temp_f = data["current"]["temp_f"]
+            condition = data["current"]["condition"]["text"]
+            location_name = data["location"]["name"]
+            region = data["location"]["region"]
+
+            return f"Current weather in {location_name}, {region}: {temp_f}°F, {condition}"
+        else:
+            return "Could not retrieve weather data. Please check the location."
+    except Exception as e:
+        return f"Error retrieving weather data: {str(e)}"
+
+
+from ollama import Client
+
+client = Client(host='http://127.0.0.1:11434')
+
+@register("ask_ai")
+def ask_ai(args):
+    prompt = args.get("prompt")
+    model = args.get("model", "llama3")
+
+    if not prompt:
+        return "Error: No prompt provided."
+
+    try:
+        response = client.chat(model=model, messages=[{"role": "user", "content": prompt}])
+        return response.get('message', {}).get('content', 'No response from model.')
+    except Exception as e:
+        return f"Error communicating with Ollama: {str(e)}"

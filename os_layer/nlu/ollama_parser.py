@@ -23,9 +23,31 @@ AVAILABLE_COMMANDS = [
         "intent": "transcribe",
         "description": "Toggle voice transcription to type into current window.",
         "args": {
-            "action": "Either 'start' or 'stop'."
+            "action": "Either 'start' or 'stop'."}
+    },
+    {
+        "intent": "ask_wolfram",
+        "description": "Ask Wolfram. This command is capable of advanced computations like science and math.",
+        "args": {
+            "query": "What you want to ask Wolfram"}
+    },
+    {
+        "intent": "get_time",
+        "description": "Gets time.",
+        "args": {}
+    },
+    {
+        "intent": "get_weather",
+        "description": "Gets Weather.",
+        "args": {"location": "Location of the weather you want. Defaults to Ann Arbor"}
+    },
+    {
+        "intent": "ask_ai",
+        "description": "Asks AI a question.",
+        "args": {"prompt": "The question", "model": "Which Ollama model you want to use, by default it is Llama3. DO not put anything here if the user doesn't specify"}
     }
-    }
+
+
 
 ]
 
