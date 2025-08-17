@@ -21,6 +21,7 @@ MANN is a lightweight Python-based voice assistant that brings together automati
 ⚡ System Commands – Shutdown or control tasks with a single command
 
 ⚙️ Installation
+
 git clone https://github.com/TheSman122333/MannV2.git
 
 cd MannV2
