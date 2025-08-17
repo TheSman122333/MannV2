@@ -12,7 +12,8 @@ import keyboard
 from voice.speaker import say
 from plyer import notification
 import os
-APP_ID = os.getenv("WOLFRAM_APP_ID")
+from dotenv import load_dotenv
+load_dotenv()
 
 stop_transcription_flag = False
 
@@ -150,36 +151,6 @@ def transcribe(args):
     else:
         return "Invalid action. Use 'start' or 'stop'."
     
-
-import wolframalpha
-
-client = wolframalpha.Client(APP_ID)
-@register("ask_wolfram")
-def ask_wolfram(args: dict) -> str:
-    query = args.get("query", "")
-    if not query:
-        return "No query provided."
-
-    try:
-        res = client.query(query)
-
-        preferred_titles = ['result', 'definition', 'value', 'exact result', 'solution']
-        for pod in res.pods:
-            if pod.title.lower() in preferred_titles:
-                if pod.texts:
-                    return pod.texts[0]
-
-        primary = next((pod for pod in res.pods if pod.primary), None)
-        if primary and primary.texts:
-            return primary.texts[0]
-
-        for pod in res.pods:
-            if pod.texts:
-                return "Wolfram Alpha says :" + primary.texts[0]
-
-        return "Sorry, I couldn't find a condensed answer."
-    except Exception as e:
-        return f"An error occurred: {e}"
     
 from datetime import datetime
 from tzlocal import get_localzone

@@ -1,3 +1,10 @@
-pyttsx3
-speechrecognition
+AppOpener
+SpeechRecognition
+pyautogui
+keyboard
+plyer
+python-dotenv
+tzlocal
+requests
 ollama
+pyttsx3

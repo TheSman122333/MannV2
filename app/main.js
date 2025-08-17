@@ -1,4 +1,3 @@
-// main.js (Electron main process)
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 

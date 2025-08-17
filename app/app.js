@@ -1,4 +1,3 @@
-// app.js
 let scene, camera, renderer, hologram;
 
 function initHologram() {
