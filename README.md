@@ -22,10 +22,15 @@ MANN is a lightweight Python-based voice assistant that brings together automati
 
 ⚙️ Installation
 git clone https://github.com/TheSman122333/MannV2.git
+
 cd MannV2
+
 python -m venv venv
+
 source venv/bin/activate   # Linux/Mac
+
 venv\Scripts\activate      # Windows
+
 pip install -r requirements.txt
 
 🔑 Configuration
